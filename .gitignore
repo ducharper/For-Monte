@@ -1,11 +1,3 @@
-# CLion / build artifacts
-cmake-build-*/
-.idea/
-
-# Compiled binaries
 *.o
 *.exe
 *.out
-
-# OS junk
-.DS_Store
