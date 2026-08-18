@@ -1,18 +1,15 @@
 #include <iostream>
 
-// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+#include "include/EuropeanCall.h"
+#include "include/MonteCarloEngine.h"
 
 int main() {
-    // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the <b>lang</b> variable name to see how CLion can help you rename it.
+    EuropeanCall my_call(100);
+    MonteCarloEngine my_engine(100, 0.05, 0.2, 1);
+    PricingResult engine_result = my_engine.price(my_call, 1000000);
+    double bs_result = my_engine.blackscholes(my_call, true);
 
-    const auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
-
-    for (int i = 1; i <= 5; i++) {
-        // TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        std::cout << "i = " << i << std::endl;
-    }
-
-    return 0;
-    // TIP See CLion help at <a href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>. Also, you can try interactive lessons for CLion by selecting 'Help | Learn IDE Features' from the main menu.
+    std::cout << "Black-Scholes:" << bs_result << std::endl;
+    std::cout << "Monte Carlo Price:" << engine_result.price << std::endl;
+    std::cout << "Monte Carlo Error:" << engine_result.standardError<< std::endl;
 }
