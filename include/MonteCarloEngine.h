@@ -43,19 +43,68 @@ public:
         return PricingResult{price, standardError};
     }
 
-    double blackscholes(const Option& option, bool isCall) {
-        double d1 = (std::log(spotPrice / option.getStrikePrice()) + ((riskFreeRate + 0.5 * (volatility * volatility)) * maturity)) / (volatility * std::sqrt(maturity));
-        double d2 = d1 - volatility * std::sqrt(maturity);
+    double blackscholes(const Option& option, bool isCall) const {
+        double d1 = computeD1(option.getStrikePrice());
+        double d2 = computeD2(d1);
 
-        double Nd1 = 0.5 * (1 + std::erf(d1 / std::sqrt(2)));
-        double negNd1 = 0.5 * (1 + std::erf(-d1 / std::sqrt(2)));
-        double Nd2 = 0.5 * (1 + std::erf(d2 / std::sqrt(2)));
-        double negNd2 = 0.5 * (1 + std::erf(-d2 / std::sqrt(2)));
+        double Nd1 = computeND(d1);
+        double negNd1 = computeND(-d1);
+        double Nd2 = computeND(d2);
+        double negNd2 = computeND(-d2);
 
         if (isCall) {
             return spotPrice * Nd1 - option.getStrikePrice() * std::exp(-riskFreeRate * maturity) * Nd2;
         } else {
             return option.getStrikePrice() * std::exp(-riskFreeRate * maturity) * negNd2 - spotPrice * negNd1;
+        }
+    }
+
+    double delta(const Option& option, bool isCall) const {
+        double d1 = computeD1(option.getStrikePrice());
+        double Nd1 = computeND(d1);
+
+        if (isCall) {
+            return Nd1;
+        } else {
+            return Nd1 - 1;
+        }
+    }
+
+    double gamma(const Option& option) const {
+        double d1 = computeD1(option.getStrikePrice());
+
+        return pdf(d1) / (spotPrice * volatility * std::sqrt(maturity));
+    }
+
+    double vega(const Option& option) const {
+        double d1 = computeD1(option.getStrikePrice());
+
+        return spotPrice * pdf(d1) * std::sqrt(maturity);
+    }
+
+    double theta(const Option& option, bool isCall) const {
+        double d1 = computeD1(option.getStrikePrice());
+        double d2 = computeD2(d1);
+        double Nd2 = computeND(d2);
+        double negNd2 = computeND(-d2);
+
+        if (isCall) {
+            return -(spotPrice * pdf(d1) * volatility) / (2 * std::sqrt(maturity)) - riskFreeRate * option.getStrikePrice() * std::exp(-riskFreeRate * maturity) * Nd2;
+        } else {
+            return -(spotPrice * pdf(d1) * volatility) / (2 * std::sqrt(maturity)) + riskFreeRate * option.getStrikePrice() * std::exp(-riskFreeRate * maturity) * negNd2;
+        }
+    }
+
+    double rho(const Option& option, bool isCall) const {
+        double d1 = computeD1(option.getStrikePrice());
+        double d2 = computeD2(d1);
+        double Nd2 = computeND(d2);
+        double negNd2 = computeND(-d2);
+
+        if (isCall) {
+            return option.getStrikePrice() * maturity * std::exp(-riskFreeRate * maturity) * Nd2;
+        } else {
+            return -option.getStrikePrice() * maturity * std::exp(-riskFreeRate * maturity) * negNd2;
         }
     }
 
@@ -65,6 +114,24 @@ private:
     double volatility;
     double maturity;
 
+    double computeD1(double strike) const {
+        double numerator = std::log(spotPrice / strike) + (riskFreeRate + 0.5 * volatility * volatility) * maturity;
+        double denominator = volatility * std::sqrt(maturity);
+        return numerator / denominator;
+    }
+
+    double computeD2(double d1) const {
+        return d1 - volatility * std::sqrt(maturity);
+    }
+
+    double computeND(double d1) const {
+        return 0.5 * (1 + std::erf(d1 / std::sqrt(2)));
+    }
+
+    static double pdf(double x) {
+        double pi = 2*acos(0.0);
+        return (1 / std::sqrt((2 * pi))) * std::exp(-(x * x) / 2);
+    }
 };
 
 #endif // FOR_MONTE_MONTECARLOENGINE_H
