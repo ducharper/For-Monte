@@ -12,6 +12,8 @@ public:
         return std::max(S_T - strikePrice, 0.0);
     }
 
+    double getStrikePrice() const override { return strikePrice; }
+
 private:
     double strikePrice;
 };

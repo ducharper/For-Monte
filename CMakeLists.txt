@@ -6,4 +6,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(For_Monte main.cpp
         include/Option.h
         include/EuropeanCall.h
-        include/EuropeanPut.h)
+        include/EuropeanPut.h
+)

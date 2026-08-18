@@ -12,8 +12,10 @@ public:
         return std::max(strikePrice - S_T, 0.0);
     }
 
+    double getStrikePrice() const override { return strikePrice; }
+
 private:
     double strikePrice;
-}
+};
 
-#endif //UNTITLED_EUROPEANPUT_H
+#endif //FOR_MONTE_EUROPEANPUT_H

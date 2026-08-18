@@ -6,6 +6,7 @@ class Option {
 public:
     virtual ~Option() = default; // virtual destructor; virtual functions need virtual destructors
     virtual double payoff(double S_T) const = 0;
+    virtual double getStrikePrice() const = 0;
 };
 
 #endif
