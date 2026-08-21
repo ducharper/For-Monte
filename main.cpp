@@ -28,4 +28,9 @@ int main() {
         tempEngine.price(my_call, 100000);
         std::cout << tempEngine.vega(my_call) << std::endl;
     }
+    for (double i = 20; i >= 1; i -= 1) {
+        double m = i * 0.1;
+        MonteCarloEngine tempEngine(100, 0.05, 0.2, m);
+        std::cout << "Maturity " << m << ": " << tempEngine.theta(my_call, true) << std::endl;
+    }
 }
