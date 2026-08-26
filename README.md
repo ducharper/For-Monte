@@ -11,4 +11,5 @@ The project is under active development, with each phase building toward a more 
 # Key References
 
 Giles, M. B. (2008). Multilevel Monte Carlo Path Simulation
+
 Black, F., & Scholes, M. (1973). The Pricing of Options and Corporate Liabilities
