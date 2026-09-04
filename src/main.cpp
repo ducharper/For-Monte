@@ -4,6 +4,7 @@
 #include "..\include\EuropeanPut.h"
 #include "..\include\MonteCarloEngine.h"
 #include "..\include\BlackScholesPricer.h"
+#include "..\include\StressTests.h"
 
 int main() {
     // Setup
@@ -44,6 +45,10 @@ int main() {
     std::cout << "Vega:  " << pricer.vega(call, spotPrice, riskFreeRate, volatility) << "\n";
     std::cout << "Theta: " << pricer.theta(call, spotPrice, riskFreeRate, volatility) << "\n";
     std::cout << "Rho:   " << pricer.rho(call, spotPrice, riskFreeRate, volatility) << "\n";
+
+    // Stress Tests
+    runVegaHumpAnalysis(pricer, call, riskFreeRate, volatility);
+    runThetaDecayAnalysis(pricer, call, spotPrice, riskFreeRate, volatility);
 
     return 0;
 }
