@@ -9,4 +9,5 @@ add_executable(For_Monte src/main.cpp
         include/EuropeanPut.h
         include/BlackScholesPricer.h
         src/StressTests.cpp
+        include/StressTests.h
 )
