@@ -1,12 +1,13 @@
 # For Monte
 
-A C++ Monte Carlo engine for pricing European options, built from the ground up as both a deep dive into quantitative finance and a showcase of systems-level C++ programming.
+A C++ Monte Carlo engine for pricing European options. Built from the ground up as both a deep .
 
 # Overview
 
-For Monte simulates the terminal price of an underlying asset under Geometric Brownian Motion (GBM), uses those simulated paths to price European call and put options, and validates the results against the closed-form Black-Scholes model. On top of pricing, it computes the full set of analytical Greeks: the risk sensitivities that matter to anyone actually managing an options position.
+For Monte prices European options in two independent ways: closed-form Black-Scholes and Monte Carlo simulation under GBM. The results of the two are validated against each other, and convergence confirms both the mathematical model and the implementation are correct. 
+The project also serves as a small testbed to explore the Greeks with user-created options, which should hopefully help build intuition behind the risk sensitivities so important in options trading. Currently, For Monte includes Theta and Vega stress tests.
 
-The project is under active development, with each phase building toward a more realistic and technically ambitious risk engine. Currently, the natural next step is implementing Multilevel Monte Carlo (MLMC), based on Giles (2008).
+The current next big step for the project is implementing Giles' Multilevel Monte Carlo. Regular Monte Carlo is computationally inefficient, but MLMC addresses this through a variance-reduction technique combining simulations across multiple discretization levels.
 
 # Key References
 
