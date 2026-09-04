@@ -1,12 +1,24 @@
-// header guard; prevents copy and paste of header contents
-#ifndef OPTION_H
-#define OPTION_H
+#ifndef FOR_MONTE_OPTION_H
+#define FOR_MONTE_OPTION_H
+
+enum class OptionType { Call, Put };
 
 class Option {
 public:
-    virtual ~Option() = default; // virtual destructor; virtual functions need virtual destructors
-    virtual double payoff(double S_T) const = 0;
-    virtual double getStrikePrice() const = 0;
+    Option(double strikePrice, double maturity)
+        : strikePrice(strikePrice), maturity(maturity) {}
+
+    virtual ~Option() = default;
+
+    virtual double payoff(double spotPriceAtMaturity) const = 0;
+    virtual OptionType getType() const = 0;
+
+    double getStrikePrice() const { return strikePrice; }
+    double getMaturity() const { return maturity; }
+
+protected:
+    double strikePrice;
+    double maturity;
 };
 
-#endif
+#endif //FOR_MONTE_OPTION_H

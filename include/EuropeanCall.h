@@ -2,20 +2,20 @@
 #define FOR_MONTE_EUROPEANCALL_H
 
 #include "Option.h"
-#include <algorithm> // for std::max
+#include <algorithm>
 
 class EuropeanCall : public Option {
 public:
-    explicit EuropeanCall(double strike) : strikePrice(strike) {}
+    EuropeanCall(double strikePrice, double maturity)
+        : Option(strikePrice, maturity) {}
 
-    double payoff(double S_T) const override {
-        return std::max(S_T - strikePrice, 0.0);
+    double payoff(double spotPriceAtMaturity) const override {
+        return std::max(spotPriceAtMaturity - strikePrice, 0.0);
     }
 
-    double getStrikePrice() const override { return strikePrice; }
-
-private:
-    double strikePrice;
+    OptionType getType() const override {
+        return OptionType::Call;
+    }
 };
 
 #endif //FOR_MONTE_EUROPEANCALL_H

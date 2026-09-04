@@ -6,16 +6,16 @@
 
 class EuropeanPut : public Option {
 public:
-    explicit EuropeanPut(double strike) : strikePrice(strike) {}
+    EuropeanPut(double strikePrice, double maturity)
+        : Option(strikePrice, maturity) {}
 
-    double payoff(double S_T) const override {
-        return std::max(strikePrice - S_T, 0.0);
+    double payoff(double spotPriceAtMaturity) const override {
+        return std::max(strikePrice - spotPriceAtMaturity, 0.0);
     }
 
-    double getStrikePrice() const override { return strikePrice; }
-
-private:
-    double strikePrice;
+    OptionType getType() const override {
+        return OptionType::Put;
+    }
 };
 
 #endif //FOR_MONTE_EUROPEANPUT_H
