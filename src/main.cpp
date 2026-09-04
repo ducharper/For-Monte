@@ -54,8 +54,8 @@ int main() {
     std::cout << "Rho:   " << pricer.rho(call, spotPrice, riskFreeRate, volatility) << "\n";
 
     // Stress Tests
-    runVegaHumpAnalysis(pricer, call, riskFreeRate, volatility);
-    runThetaDecayAnalysis(pricer, call, spotPrice, riskFreeRate, volatility);
+    runVegaTest(pricer, call, riskFreeRate, volatility);
+    runThetaTest(pricer, call, spotPrice, riskFreeRate, volatility);
 
     return 0;
 }

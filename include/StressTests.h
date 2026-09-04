@@ -4,10 +4,10 @@
 #include "BlackScholesPricer.h"
 #include "Option.h"
 
-void runVegaHumpAnalysis(const BlackScholesPricer& pricer, const Option& option,
+void runVegaTest(const BlackScholesPricer& pricer, const Option& option,
                           double riskFreeRate, double volatility);
 
-void runThetaDecayAnalysis(const BlackScholesPricer& pricer, const Option& option,
+void runThetaTest(const BlackScholesPricer& pricer, const Option& option,
                             double spotPrice, double riskFreeRate, double volatility);
 
 #endif //FOR_MONTE_STRESSTESTS_H

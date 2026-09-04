@@ -4,7 +4,7 @@
 #include "..\include\StressTests.h"
 #include "..\include\EuropeanCall.h"
 
-void runVegaHumpAnalysis(const BlackScholesPricer& pricer, const Option& option,
+void runVegaTest(const BlackScholesPricer& pricer, const Option& option,
                           double riskFreeRate, double volatility) {
     std::cout << "\nSpot Price vs. Vega\n";
     for (double spot = 50.0; spot <= 150.0; spot += 10.0) {
@@ -13,7 +13,7 @@ void runVegaHumpAnalysis(const BlackScholesPricer& pricer, const Option& option,
     }
 }
 
-void runThetaDecayAnalysis(const BlackScholesPricer& pricer, const Option& baseOption,
+void runThetaTest(const BlackScholesPricer& pricer, const Option& baseOption,
                             double spotPrice, double riskFreeRate, double volatility) {
     std::cout << "\nTime to Maturity vs. Theta\n";
 
