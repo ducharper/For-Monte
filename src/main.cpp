@@ -8,11 +8,18 @@
 
 int main() {
     // Setup
-    double spotPrice = 100.0;
-    double strikePrice = 100.0;
-    double riskFreeRate = 0.05;
-    double volatility = 0.2;
-    double maturity = 1.0;
+    double spotPrice, strikePrice, riskFreeRate, volatility, maturity;
+
+    std::cout << "Enter spot price (e.g. 100.0): ";
+    std::cin >> spotPrice;
+    std::cout << "Enter strike price (e.g. 100.0): ";
+    std::cin >> strikePrice;
+    std::cout << "Enter risk-free rate (e.g. 0.05 for 5%): ";
+    std::cin >> riskFreeRate;
+    std::cout << "Enter volatility (e.g. 0.2 for 20%): ";
+    std::cin >> volatility;
+    std::cout << "Enter time to maturity in years (e.g. 1): ";
+    std::cin >> maturity;
 
     EuropeanCall call(strikePrice, maturity);
     EuropeanPut put(strikePrice, maturity);
